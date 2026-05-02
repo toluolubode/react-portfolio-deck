@@ -1,63 +1,73 @@
-import { motion } from 'motion/react';
-import { TOKENS } from '../DesignTokens';
+import {
+  FFS,
+  THEME
+} from '../data';
 import { StaggerItem } from '../components';
 
 /* ═══════════════════════════════════════════════
-   Premium Title Slide
+   Title Slide
    ═══════════════════════════════════════════════ */
 export function TitleSlideContent() {
   return (
-    <div className="relative flex flex-col items-center justify-center h-full w-full text-center p-8 lg:p-12 overflow-hidden">
-      
-      {/* Animated Background Decoration */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <motion.div 
-          className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full opacity-20"
-          style={{ background: `radial-gradient(circle, ${TOKENS.colors.primary}33 0%, transparent 70%)` }}
-          animate={{
-            x: [0, 50, 0],
-            y: [0, 30, 0],
-          }}
-          transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-        />
-        <motion.div 
-          className="absolute bottom-[-5%] right-[-5%] w-[30%] h-[30%] rounded-full opacity-10"
-          style={{ background: `radial-gradient(circle, ${TOKENS.colors.accent}22 0%, transparent 70%)` }}
-          animate={{
-            x: [0, -40, 0],
-            y: [0, -20, 0],
-          }}
-          transition={{ duration: 12, repeat: Infinity, ease: "linear", delay: 2 }}
-        />
-      </div>
-
-      <StaggerItem delay={100} y={20}>
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-8" style={TOKENS.effects.glass}>
-          <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-          <span className="text-[11px] font-bold uppercase tracking-[1.5px] text-white/40">
-            Portfolio Deck v1.0
-          </span>
+    <div
+      className="flex flex-col items-center justify-center h-full text-center p-8 lg:p-12"
+    >
+      <StaggerItem delay={60}>
+        <div
+          className="relative mb-8"
+        >
+          <div
+            className="absolute inset-[-12px] rounded-full"
+            style={{
+              background:
+                "radial-gradient(circle, rgba(52,211,153,0.08) 40%, transparent 100%)",
+            }}
+          />
+          <div
+            className="relative rounded-full flex items-center justify-center font-bold text-4xl"
+            style={{
+              width: "clamp(80px, 15vw, 120px)",
+              height: "clamp(80px, 15vw, 120px)",
+              background: THEME.primary,
+              color: "#fff",
+              boxShadow:
+                "0 0 0 2px rgba(255,255,255,0.28), 0 24px 48px rgba(0,0,0,0.4)",
+            }}
+          >
+            A
+          </div>
         </div>
       </StaggerItem>
-
-      <StaggerItem delay={200}>
-        <h1 className="font-['DM_Sans',sans-serif] text-white tracking-[-4px] leading-[0.95] text-7xl lg:text-9xl mb-6 font-bold">
-          Your <span className="text-white/40 italic font-light">Name.</span>
+      <StaggerItem delay={160}>
+        <h1
+          className="font-['DM_Sans',sans-serif] text-white tracking-[-2px] leading-[1.1] text-5xl lg:text-7xl mb-6"
+          style={{ ...FFS }}
+        >
+          Your Name
         </h1>
       </StaggerItem>
-
-      <StaggerItem delay={350}>
-        <p className="font-['DM_Sans',sans-serif] text-white/60 tracking-[-0.5px] leading-[1.5] text-xl lg:text-2xl max-w-[600px] mx-auto mb-12">
-          Crafting digital experiences through <span className="text-white">intentional design</span> and <span className="text-white">precise engineering.</span>
+      <StaggerItem delay={260}>
+        <p
+          className="font-['DM_Sans',sans-serif] text-white/55 tracking-[-0.5px] leading-[1.5] text-xl lg:text-2xl mb-8"
+          style={{ ...FFS }}
+        >
+          Product Designer &middot; UI Engineer
         </p>
       </StaggerItem>
-
-      <StaggerItem delay={500}>
-        <div className="flex items-center justify-center gap-8 lg:gap-12 opacity-40 grayscale hover:grayscale-0 transition-all duration-700">
-           {/* Placeholders for famous logos or just text */}
-          {["Linear", "Stripe", "Apple"].map((c) => (
-            <span key={c} className="font-['DM_Sans',sans-serif] font-bold text-lg lg:text-xl tracking-tighter text-white">
-              {c}
+      <StaggerItem delay={360}>
+        <div
+          className="flex items-center gap-6"
+        >
+          {["Company A", "Company B", "Company C"].map((c, i) => (
+            <span key={c} className="flex items-center gap-6">
+              <span
+                className="tracking-[0.8px] uppercase text-white/40 text-xs lg:text-sm"
+              >
+                {c}
+              </span>
+              {i < 2 && (
+                <span className="block w-[3px] h-[3px] rounded-full bg-white/15" />
+              )}
             </span>
           ))}
         </div>
