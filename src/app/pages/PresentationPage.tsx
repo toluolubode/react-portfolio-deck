@@ -63,6 +63,13 @@ export default function PresentationPage() {
 
   const [chromeVisible, setChromeVisible] = useState(true);
   const [toolbarHidden, setToolbarHidden] = useState(false);
+  const [isInitializing, setIsInitializing] = useState(true);
+
+  // Intro sequence timer
+  useEffect(() => {
+    const t = setTimeout(() => setIsInitializing(false), 800);
+    return () => clearTimeout(t);
+  }, []);
 
   // Timer State
   const [timerRunning, setTimerRunning] = useState(false);
@@ -555,6 +562,30 @@ export default function PresentationPage() {
           onTouchStart={onTouchStart}
           onTouchEnd={onTouchEnd}
         >
+          {/* ── Premium Intro Sequence ── */}
+          <AnimatePresence>
+            {isInitializing && (
+              <motion.div
+                className="fixed inset-0 z-[100] bg-[#0A0A0A] flex items-center justify-center"
+                exit={{ 
+                  opacity: 0,
+                  scale: 1.05,
+                  filter: "blur(20px)",
+                }}
+                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.4 }}
+                  className="flex flex-col items-center gap-4"
+                >
+                  <div className="w-12 h-12 rounded-full border-2 border-white/5 border-t-white/40 animate-spin" />
+                  <span className="text-white/20 text-xs tracking-widest uppercase">Initializing Deck</span>
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           {/* Subtle ambient glow */}
           <div
