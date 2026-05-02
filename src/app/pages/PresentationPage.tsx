@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef, createContext, useContext } from "react";
 import { useNavigate } from "react-router";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence, useMotionValue, useSpring } from "motion/react";
 import { CaretLeft as ChevronLeft } from "@phosphor-icons/react/dist/ssr/CaretLeft";
 import { CaretRight as ChevronRight } from "@phosphor-icons/react/dist/ssr/CaretRight";
 import { X } from "@phosphor-icons/react/dist/ssr/X";
@@ -64,6 +64,22 @@ export default function PresentationPage() {
   const [chromeVisible, setChromeVisible] = useState(true);
   const [toolbarHidden, setToolbarHidden] = useState(false);
   const [isInitializing, setIsInitializing] = useState(true);
+
+  // Cursor state for interaction delighter
+  const cursorX = useMotionValue(-100);
+  const cursorY = useMotionValue(-100);
+  const springConfig = { damping: 25, stiffness: 700 };
+  const cursorXSpring = useSpring(cursorX, springConfig);
+  const cursorYSpring = useSpring(cursorY, springConfig);
+
+  useEffect(() => {
+    const moveCursor = (e: MouseEvent) => {
+      cursorX.set(e.clientX);
+      cursorY.set(e.clientY);
+    };
+    window.addEventListener('mousemove', moveCursor);
+    return () => window.removeEventListener('mousemove', moveCursor);
+  }, []);
 
   // Intro sequence timer
   useEffect(() => {
@@ -587,7 +603,25 @@ export default function PresentationPage() {
             )}
           </AnimatePresence>
 
-          {/* Subtle ambient glow */}
+          {/* ── Interaction Delighter: Trailing Cursor ── */}
+          <motion.div
+            className="pointer-events-none fixed top-0 left-0 w-3 h-3 rounded-full z-[9999] border border-white/20 hidden lg:block"
+            style={{
+              x: cursorXSpring,
+              y: cursorYSpring,
+              translateX: "-50%",
+              translateY: "-50%",
+            }}
+          />
+          <motion.div
+            className="pointer-events-none fixed top-0 left-0 w-1 h-1 bg-white rounded-full z-[9999] hidden lg:block"
+            style={{
+              x: cursorX,
+              y: cursorY,
+              translateX: "-50%",
+              translateY: "-50%",
+            }}
+          />
           <div
             className="absolute top-0 right-0 w-[600px] h-[600px] rounded-full pointer-events-none"
             style={{

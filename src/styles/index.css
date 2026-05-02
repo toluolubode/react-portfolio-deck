@@ -57,3 +57,48 @@
     height: 100%;
   }
 }
+
+/* ──────────────────────────────────────────────────
+   PREMIUM UI DELIGHTERS
+   ────────────────────────────────────────────────── */
+
+/* Shimmer Border Effect */
+.shimmer-border-wrap {
+  position: relative;
+  overflow: hidden;
+  border-radius: 9999px; /* Rounded-full */
+  padding: 1px; /* The border width */
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.shimmer-border-wrap::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(
+    transparent,
+    rgba(255, 255, 255, 0),
+    rgba(255, 255, 255, 0.3),
+    rgba(255, 255, 255, 0),
+    transparent
+  );
+  animation: shimmer-rotate 4s linear infinite;
+}
+
+@keyframes shimmer-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Inner card to hide the center of the conic gradient */
+.shimmer-border-wrap > * {
+  position: relative;
+  z-index: 1;
+}

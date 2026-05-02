@@ -17,9 +17,23 @@ function figmaAssetResolver() {
   }
 }
 
+function terminalSplash() {
+  return {
+    name: 'terminal-splash',
+    configureServer() {
+      console.log('\x1b[35m%s\x1b[0m', '\n  ✦ PORTFOLIO DECK ENGINE ✦');
+      console.log('\x1b[36m%s\x1b[0m', '  ━━━━━━━━━━━━━━━━━━━━━━━━━');
+      console.log('\x1b[90m%s\x1b[0m', '  → Slide registry: src/app/pages/presentation/deck-builder.ts');
+      console.log('\x1b[90m%s\x1b[0m', '  → Talk track:     src/app/pages/presentation/presenter-notes.ts');
+      console.log('\x1b[32m%s\x1b[0m', '  Ready to build your story.\n');
+    }
+  }
+}
+
 export default defineConfig({
   plugins: [
     figmaAssetResolver(),
+    terminalSplash(),
     // The React and Tailwind plugins are both required for Make, even if
     // Tailwind is not being actively used – do not remove them
     react(),
